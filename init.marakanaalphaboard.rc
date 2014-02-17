@@ -62,7 +62,7 @@ on boot
 # something else.
 
 on fs
-        mount_all /fstab.goldfish
+        mount_all /fstab.marakanaalphaboard
 
 service goldfish-setup /system/etc/init.goldfish.sh
     user root
