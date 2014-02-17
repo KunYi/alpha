@@ -7,8 +7,8 @@ MY_PATH := $(LOCAL_PATH)/../alpha
 # Include all makefiles in sub-directories (one level deep)
 include $(call all-subdir-makefiles)
 
-# Get the emulator-specific support for vold.fstab, which mounts the external storage (sdcard)
-PRODUCT_COPY_FILES += system/core/rootdir/etc/vold.fstab:system/etc/vold.fstab
+# Get the emulator-specific support for fstab, which mounts internal and external storage (sdcard)
+PRODUCT_COPY_FILES += $(MY_PATH)/fstab.marakanaalphaboard:root/fstab.marakanaalphaboard
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
