@@ -3,8 +3,8 @@
 #define LOG_TAG "MrknLog"                                          /* <1> */
 
 #include <mrknlog.h>                                               /* <3> */
-#include <log/log.h>                                            /* <1> */
-#include <log/logger.h>                                         /* <4> */
+#include <log/log.h>                                               /* <1> */
+#include <log/logger.h>                                            /* <4> */
 #include <fcntl.h>
 #include <poll.h>                                                  /* <5> */
 #include <errno.h>
