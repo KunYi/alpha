@@ -64,7 +64,7 @@ public class LogManager {
   private LogManager() {
     Log.d(TAG, "Connecting to ILogService by name [" + REMOTE_SERVICE_NAME + "]");
     mService = ILogService.Stub.asInterface(
-      ServiceManager.getService(REMOTE_SERVICE_NAME));         // <7>
+      ServiceManager.getService(REMOTE_SERVICE_NAME));             // <7>
     if (mService == null) {
       throw new IllegalStateException("Failed to find ILogService by name [" + REMOTE_SERVICE_NAME + "]");
     }
@@ -73,7 +73,7 @@ public class LogManager {
   public void flushLog() {
     try {
       if (DEBUG) Slog.d(TAG, "Flushing log.");
-      mService.flushLog();                                     // <8>
+      mService.flushLog();                                         // <8>
     } catch (RemoteException e) { 
       throw new RuntimeException("Failed to flush log", e);
     }
@@ -82,7 +82,7 @@ public class LogManager {
   public int getTotalLogSize() {
     try {
       if (DEBUG) Slog.d(TAG, "Getting total log size.");
-      return mService.getTotalLogSize();                       // <8>
+      return mService.getTotalLogSize();                           // <8>
     } catch (RemoteException e) {
       throw new RuntimeException("Failed to get total log size", e);
     }
@@ -91,7 +91,7 @@ public class LogManager {
   public int getUsedLogSize() {
     try {
       if (DEBUG) Slog.d(TAG, "Getting used log size.");
-      return mService.getUsedLogSize();                        // <8>
+      return mService.getUsedLogSize();                            // <8>
     } catch (Exception e) {
       throw new RuntimeException("Failed to get used log size", e);
     }
@@ -103,13 +103,13 @@ public class LogManager {
     if (mListeners.containsKey(listener)) {
       Log.w(TAG, "Already registered: " + listener);
     } else {
-      synchronized (mListeners) {                                // <5>
+      synchronized (mListeners) {                                  // <5>
         ListenerTransport wrapper = new ListenerTransport(listener);
         mListeners.put(listener, wrapper);
 
         try {
           if (DEBUG) Log.d(TAG, "Registering remote listener.");
-          mService.register(wrapper);                            // <8>
+          mService.register(wrapper);                              // <8>
         } catch (RemoteException e) {
           throw new RuntimeException("Failed to register " + listener, e);
         }
@@ -123,19 +123,19 @@ public class LogManager {
     if (!mListeners.containsKey(listener)) {
       Log.w(TAG, "Not registered: " + listener);
     } else {
-      synchronized (mListeners) {                               // <5>
+      synchronized (mListeners) {                                  // <5>
         ListenerTransport wrapper = mListeners.remove(listener);
       
         if (wrapper != null) {
           try {
             if (DEBUG) Log.d(TAG, "Unregistering remote listener.");
-            mService.unregister(wrapper);                       // <8>
+            mService.unregister(wrapper);                          // <8>
           } catch (RemoteException e) {
             throw new RuntimeException("Failed to unregister " + listener, e);
           }
         }
 
-        wrapper.clearListener();                                // <9>
+        wrapper.clearListener();                                   // <9>
       }
     }
   }
