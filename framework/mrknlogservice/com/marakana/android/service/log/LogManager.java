@@ -105,14 +105,14 @@ public class LogManager {
     } else {
       synchronized (mListeners) {                                  // <5>
         ListenerTransport wrapper = new ListenerTransport(listener);
-        mListeners.put(listener, wrapper);
-
         try {
           if (DEBUG) Log.d(TAG, "Registering remote listener.");
           mService.register(wrapper);                              // <8>
         } catch (RemoteException e) {
           throw new RuntimeException("Failed to register " + listener, e);
         }
+
+        mListeners.put(listener, wrapper);
       }
     }
   }
