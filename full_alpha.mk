@@ -20,5 +20,12 @@ PRODUCT_NAME := full_alpha
 PRODUCT_DEVICE := alpha
 PRODUCT_MODEL := Full Alpha Image for Emulator
 
+# Include the common definitions and packages
+include $(LOCAL_PATH)/common.mk
+
 # Enable overlays
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
+
+# Add our device-specific packages
+PRODUCT_PACKAGES += MrknLogNative
+PRODUCT_PACKAGES += MrknLogClient

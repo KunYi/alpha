@@ -8,7 +8,6 @@ LOCAL_REQUIRED_MODULES := \
 LOCAL_JAVA_LIBRARIES := \
 	com.marakana.android.service.log \
 	com.marakana.android.lib.log \
-	core \
 	framework
 LOCAL_PACKAGE_NAME := MrknLogService
 LOCAL_SDK_VERSION := current

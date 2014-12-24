@@ -20,9 +20,9 @@ PRODUCT_COPY_FILES += $(LOCAL_KERNEL):kernel
 
 # Copy our init, ueventd, and fstab configuration files to the root
 # file system (ramdisk.img -> boot.img)
-PRODUCT_COPY_FILES += $(MY_PATH)/init.marakanaalphaboard.rc:root/init.marakanaalphaboard.rc
-PRODUCT_COPY_FILES += $(MY_PATH)/ueventd.marakanaalphaboard.rc:root/ueventd.marakanaalphaboard.rc
-PRODUCT_COPY_FILES += $(MY_PATH)/fstab.marakanaalphaboard:root/fstab.marakanaalphaboard
+PRODUCT_COPY_FILES += $(MY_PATH)/init.goldfish.rc:root/init.goldfish.rc
+PRODUCT_COPY_FILES += $(MY_PATH)/ueventd.goldfish.rc:root/ueventd.goldfish.rc
+PRODUCT_COPY_FILES += $(MY_PATH)/fstab.goldfish:root/fstab.goldfish
 
 # Include all packages from this file
 include $(MY_PATH)/packages.mk

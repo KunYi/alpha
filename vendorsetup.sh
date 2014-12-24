@@ -1,4 +1,4 @@
-add_lunch_combo full_marakana_alpha-eng
-add_lunch_combo full_marakana_alpha-userdebug
-add_lunch_combo full_marakana_alpha-user
+add_lunch_combo full_alpha-eng
+add_lunch_combo full_alpha-userdebug
+add_lunch_combo full_alpha-user
 
