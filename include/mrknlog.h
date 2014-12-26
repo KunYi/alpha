@@ -5,6 +5,8 @@
 #include <sys/cdefs.h>
 #include <sys/types.h>
 #include <hardware/hardware.h>
+#include <log/log.h>
+#include <log/logger.h>   
 
 __BEGIN_DECLS
 
@@ -13,7 +15,7 @@ __BEGIN_DECLS
 struct mrknlog_device_t {
   struct hw_device_t common;
   
-  int fd;
+  struct logger_list *logger_list;
   
   /*
    * Flush the log device
