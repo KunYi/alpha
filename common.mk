@@ -14,9 +14,9 @@ PRODUCT_COPY_FILES += \
 # Enable overlays
 DEVICE_PACKAGE_OVERLAYS := $(MY_PATH)/overlay
 
-# Enable our custom kernel
-LOCAL_KERNEL := $(MY_PATH)/kernel
-PRODUCT_COPY_FILES += $(LOCAL_KERNEL):kernel
+# TODO: Enable our custom kernel
+#LOCAL_KERNEL := $(MY_PATH)/kernel
+#PRODUCT_COPY_FILES += $(LOCAL_KERNEL):kernel
 
 # Copy our init, ueventd, and fstab configuration files to the root
 # file system (ramdisk.img -> boot.img)
