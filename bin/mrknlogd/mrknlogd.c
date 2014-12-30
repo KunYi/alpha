@@ -28,16 +28,19 @@ int main (int argc, char* argv[]) {
       ret = module->methods->open(module, 0, (struct hw_device_t **) &dev);
       if (ret == 0) {
         int frequency = atoi(argv[1]);
-        int totalSize = dev->get_total_log_size(dev);
+        int totalSize;
         int usedSize;
         int count = 1;
         while(runFlag) {
+          totalSize = dev->get_total_log_size(dev);
           usedSize = dev->get_used_log_size(dev);
           if (dev->flush_log(dev) == 0) {
             SLOGI("Flushed log (%d, %d of %d bytes). Waiting %d seconds before the next flush.", 
               count, usedSize, totalSize, frequency);
+          } else if (errno == ECONNREFUSED) {
+            SLOGW("Too early to flush log. Socket not ready yet.");
           } else {
-            SLOGE("Failed to flush log. Bailing out");
+            SLOGE("Failed to flush log. Bailing out: %s", strerror(errno));
             break;
           }
           count++;

@@ -13,15 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# Include the common definitions and packages
+# This is done before inherit to override any duplicates
+include $(LOCAL_PATH)/common.mk
+
+# Inherit all packages from the "full" Android product
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_x86_64.mk)
 
-# Discard inherited values and use our own instead
+# Override inherited values
 PRODUCT_NAME := full_alpha
 PRODUCT_DEVICE := alpha
 PRODUCT_MODEL := Full Alpha Image for Emulator
-
-# Include the common definitions and packages
-include $(LOCAL_PATH)/common.mk
 
 # Enable overlays
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay

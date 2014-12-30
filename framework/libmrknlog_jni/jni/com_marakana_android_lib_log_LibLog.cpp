@@ -5,17 +5,14 @@
 
 static const char * class_name = "com/marakana/android/lib/log/LibLog";
 
-static jfieldID nativeHandleFieldId;
+static mrknlog_device_t *device;
 
 static void throwLibLogException(JNIEnv *env, const char *msg) {
   jniThrowException(env, "com/marakana/android/lib/log/LibLogException", msg);
 }
 
 static void lib_init(JNIEnv *env, jclass clazz) {
-  nativeHandleFieldId = env->GetFieldID(clazz, "nativeHandle", "I");
-  if (!nativeHandleFieldId) {
-    throwLibLogException(env, "No such field 'nativeHandle'");
-  }
+  //TODO: Does nothing now...Still needed?
 }
 
 static void native_init(JNIEnv *env, jobject object) {
@@ -29,17 +26,14 @@ static void native_init(JNIEnv *env, jobject object) {
     if (err) {
       throwLibLogException(env, "Failed to open device");
     } else {
-      env->SetIntField(object, nativeHandleFieldId, (jint) dev);     
+      device = dev;    
     }
   }
 }
 
 static struct mrknlog_device_t * getDevice(JNIEnv *env, jobject object) {
-  if (nativeHandleFieldId) {
-    jint dev = env->GetIntField(object, nativeHandleFieldId);
-    if (dev) {
-      return (struct mrknlog_device_t *) dev;
-    }  
+  if (device) {
+    return device; 
   }
   throwLibLogException(env, "Not initialized or closed");
   return NULL;
@@ -49,7 +43,7 @@ static void native_close(JNIEnv *env, jobject object) {
   struct mrknlog_device_t *dev = getDevice(env, object);
   if (dev) {
     dev->common.close((struct hw_device_t *)dev);
-    env->SetIntField(object, nativeHandleFieldId, 0);
+    dev = NULL;
   }
 }
 
@@ -84,26 +78,13 @@ static jint getUsedLogSize(JNIEnv *env, jobject object) {
   return ret;
 }
 
-static jboolean waitForLogData(JNIEnv *env, jobject object, jint timeoutInMs) {
-  struct mrknlog_device_t *dev = getDevice(env, object);
-  int ret = 0;
-  if (dev) {
-    ret = dev->wait_for_log_data(dev, timeoutInMs);
-    if (ret < 0) {
-      throwLibLogException(env, "Failed while waiting for log data");
-    } 
-  }
-  return ret > 0 ? JNI_TRUE : JNI_FALSE;
-}
-
 static JNINativeMethod method_table[] = {
   { "libInit", "()V", (void *) lib_init},
   { "init", "()V", (void *) native_init },
   { "close", "()V", (void *) native_close },
   { "flushLog", "()V", (void *) flushLog },
   { "getTotalLogSize", "()I", (void *) getTotalLogSize },
-  { "getUsedLogSize", "()I", (void *) getUsedLogSize },
-  { "waitForLogData", "(I)Z", (void *) waitForLogData }
+  { "getUsedLogSize", "()I", (void *) getUsedLogSize }
 };
 
 

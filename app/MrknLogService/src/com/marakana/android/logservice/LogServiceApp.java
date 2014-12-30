@@ -14,7 +14,8 @@ public class LogServiceApp extends Application {
     super.onCreate();
     this.serviceImpl = new ILogServiceImpl(this);
     ServiceManager.addService(REMOTE_SERVICE_NAME, this.serviceImpl);
-    Log.d(TAG, "Registered [" + serviceImpl.getClass().getName() + "] as [" + REMOTE_SERVICE_NAME + "]");
+    Log.d(TAG, "Registered [" + serviceImpl.getClass().getName()
+        + "] as [" + REMOTE_SERVICE_NAME + "]");
   }
 
   public void onTerminate() {

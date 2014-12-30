@@ -21,56 +21,56 @@ class ILogServiceImpl extends ILogService.Stub {
   private static final int INCREMENTAL_TIMEOUT = 2 * 1000;
   private static final boolean DEBUG = false;
   private final Map<IBinder, ListenerTracker> listeners = 
-    new HashMap<IBinder, ListenerTracker>();                       // <1>
-  private final AtomicInteger flushCounter = new AtomicInteger();  // <2>
+    new HashMap<IBinder, ListenerTracker>();
+  private final AtomicInteger flushCounter = new AtomicInteger();
   private final Context context;
-  private final LibLog libLog;                                     // <4>  
-  private LogServiceThread logServiceThread;                       // <3>
+  private final LibLog libLog;
+  private LogServiceThread logServiceThread;
 
 
   ILogServiceImpl(Context context) {
     this.context = context;
-    this.libLog = new LibLog();                                    // <4>
+    this.libLog = new LibLog();
   }
   
   protected void finalize() throws Throwable {
-    this.libLog.close();                                           // <4>
+    this.libLog.close();
     super.finalize();
   }
 
   public void flushLog() {
     this.context.enforceCallingOrSelfPermission(
-      Manifest.permission.FLUSH_LOG, "Flush somewhere else");      // <5>
+      Manifest.permission.FLUSH_LOG, "Flush somewhere else");
     if (DEBUG) Slog.d(TAG, "Flushing log.");
-    this.libLog.flushLog();                                        // <6>
-    this.flushCounter.incrementAndGet();                           // <2>
+    this.libLog.flushLog();
+    this.flushCounter.incrementAndGet();
   }
 
   public int getUsedLogSize() {
     if (DEBUG) Slog.d(TAG, "Getting used log size.");
-    return this.libLog.getUsedLogSize();                           // <6>
+    return this.libLog.getUsedLogSize();
   }
 
   public int getTotalLogSize() {
     if (DEBUG) Slog.d(TAG, "Getting total log size.");
-    return this.libLog.getTotalLogSize();                          // <6>
+    return this.libLog.getTotalLogSize();
   }
 
   public void register(ILogListener listener) throws RemoteException {
     if (listener != null) {
       IBinder binder = listener.asBinder();
-      synchronized(this.listeners) {                               // <1>
+      synchronized(this.listeners) {
         if (this.listeners.containsKey(binder)) {
           Slog.w(TAG, "Ignoring duplicate listener: " + binder);
         } else {
           ListenerTracker listenerTracker = new ListenerTracker(listener);
           binder.linkToDeath(listenerTracker, 0);
-          this.listeners.put(binder, listenerTracker);             // <1>
+          this.listeners.put(binder, listenerTracker);
           if (DEBUG) Slog.d(TAG, "Registered listener: " + binder);
           if (this.logServiceThread == null) {
             if (DEBUG) Slog.d(TAG, "Starting thread");
-            this.logServiceThread = new LogServiceThread();        // <3>
-            this.logServiceThread.start();                         // <3>
+            this.logServiceThread = new LogServiceThread();
+            this.logServiceThread.start();
           }
         }
       }
@@ -80,9 +80,9 @@ class ILogServiceImpl extends ILogService.Stub {
   public void unregister(ILogListener listener) {
     if (listener != null) {
       IBinder binder = listener.asBinder();
-      synchronized(this.listeners) {                               // <1>
+      synchronized(this.listeners) {
         ListenerTracker listenerTracker = 
-          this.listeners.remove(binder);                           // <1>
+          this.listeners.remove(binder);
         if (listenerTracker == null) {
           Slog.w(TAG, "Ignoring unregistered listener: " + binder);
         } else {
@@ -90,8 +90,8 @@ class ILogServiceImpl extends ILogService.Stub {
           binder.unlinkToDeath(listenerTracker, 0);
           if (this.logServiceThread != null && this.listeners.isEmpty()) {
             if (DEBUG) Slog.d(TAG, "Stopping thread");
-            this.logServiceThread.interrupt();                     // <3>
-            this.logServiceThread = null;                          // <3>
+            this.logServiceThread.interrupt();
+            this.logServiceThread = null;
           }
         }
       }
@@ -147,28 +147,38 @@ class ILogServiceImpl extends ILogService.Stub {
     }
   }
 
-  private final class LogServiceThread extends Thread {            // <3>
+  private final class LogServiceThread extends Thread {
+    private int mLastKnownSize;
+
     public void run() {
-      while(!Thread.interrupted()) {                               // <3>
+      while(!Thread.interrupted()) {
         try {
           if (DEBUG) Slog.d(TAG, "Waiting for log data");
           int usedSize = ILogServiceImpl.this.getUsedLogSize();
-          if (ILogServiceImpl.this.libLog.waitForLogData(INCREMENTAL_TIMEOUT)
-            || (usedSize != 0 && ILogServiceImpl.this.getUsedLogSize() == 0)) {
-            usedSize = ILogServiceImpl.this.getUsedLogSize();
-            if (DEBUG) Slog.d(TAG, "Log data changed. Used data is now at " + usedSize);  
+
+          if (mLastKnownSize != usedSize) {
+            mLastKnownSize = ILogServiceImpl.this.getUsedLogSize();
+            if (DEBUG) Slog.d(TAG, "Log data changed. Used data is now at " + mLastKnownSize);  
+
             synchronized(ILogServiceImpl.this.listeners) {
               for (Map.Entry<IBinder, ListenerTracker> entry : ILogServiceImpl.this.listeners.entrySet()) {
                 ILogListener listener = entry.getValue().getListener();
                 try {
                   if (DEBUG) Slog.d(TAG, "Notifying listener: " +  entry.getKey());
-                  listener.onUsedLogSizeChange(usedSize);
+                  listener.onUsedLogSizeChange(mLastKnownSize);
                 } catch (RemoteException e) {
                   Slog.e(TAG, "Failed to update listener: " + entry.getKey(), e); 
                   ILogServiceImpl.this.unregister(listener);
                 }
               }
             }  
+          } else {
+            //No change, take a rest before polling again
+            try {
+              Thread.sleep(INCREMENTAL_TIMEOUT);
+            } catch (InterruptedException e2) {
+              break;
+            }
           }
         } catch (LibLogException e) {
           Slog.e(TAG, "Oops", e);

@@ -13,10 +13,18 @@ __BEGIN_DECLS
 #define MRKNLOG_HARDWARE_MODULE_ID "mrknlog"
 
 struct mrknlog_device_t {
+  /* 
+   * Common HAL device structure.
+   * Always placed at the head of the module definition.
+   */
   struct hw_device_t common;
   
+  /*
+   * Android liblog reference to the sub-log(s) we
+   * want to access from this module.
+   */
   struct logger_list *logger_list;
-  
+
   /*
    * Flush the log device
    * 
@@ -37,13 +45,6 @@ struct mrknlog_device_t {
    * Returns: used log size, < 0 on failure
    */
   int (*get_used_log_size)(struct mrknlog_device_t* dev);
-  
-  /*
-   * Wait until more log data becomes available or until timeout expires
-   * timeout: the max wait time (in ms). The value of -1 means wait forever
-   * Returns: < 0 or error, 0 on timeout, the amount of new data (in bytes)
-   */ 
-  int (*wait_for_log_data)(struct mrknlog_device_t* dev, int timeout);
 };
 
 __END_DECLS

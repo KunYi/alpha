@@ -21,7 +21,6 @@ public class LibLog {
   public native void flushLog() throws LibLogException;
   public native int getTotalLogSize() throws LibLogException;
   public native int getUsedLogSize() throws LibLogException;
-  public native boolean waitForLogData(int timeoutInMs) throws LibLogException;
 
   static {
      System.loadLibrary("mrknlog_jni");

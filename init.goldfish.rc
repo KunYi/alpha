@@ -94,3 +94,10 @@ service goldfish-logcat /system/bin/logcat -Q
 service fuse_sdcard /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard /storage/sdcard
     class late_start
     disabled
+
+# Custom log-flushing daemon
+service mrknlogd /system/bin/mrknlogd 30
+    class late_start
+    user system
+    group log
+    oneshot
