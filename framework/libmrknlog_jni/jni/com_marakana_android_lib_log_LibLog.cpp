@@ -11,10 +11,6 @@ static void throwLibLogException(JNIEnv *env, const char *msg) {
   jniThrowException(env, "com/marakana/android/lib/log/LibLogException", msg);
 }
 
-static void lib_init(JNIEnv *env, jclass clazz) {
-  //TODO: Does nothing now...Still needed?
-}
-
 static void native_init(JNIEnv *env, jobject object) {
   hw_module_t* module;
   int err = hw_get_module(MRKNLOG_HARDWARE_MODULE_ID, (hw_module_t const**)&module);
@@ -79,7 +75,6 @@ static jint getUsedLogSize(JNIEnv *env, jobject object) {
 }
 
 static JNINativeMethod method_table[] = {
-  { "libInit", "()V", (void *) lib_init},
   { "init", "()V", (void *) native_init },
   { "close", "()V", (void *) native_close },
   { "flushLog", "()V", (void *) flushLog },
