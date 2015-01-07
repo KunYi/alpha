@@ -27,20 +27,19 @@ static void native_init(JNIEnv *env, jobject object) {
   }
 }
 
+static void native_close(JNIEnv *env, jobject object) {
+  if (device) {
+    device->common.close((struct hw_device_t *)device);
+    device = NULL;
+  }
+}
+
 static struct mrknlog_device_t * getDevice(JNIEnv *env, jobject object) {
   if (device) {
     return device; 
   }
   throwLibLogException(env, "Not initialized or closed");
   return NULL;
-}
-
-static void native_close(JNIEnv *env, jobject object) {
-  struct mrknlog_device_t *dev = getDevice(env, object);
-  if (dev) {
-    dev->common.close((struct hw_device_t *)dev);
-    dev = NULL;
-  }
 }
 
 static void flushLog(JNIEnv *env, jobject object) {

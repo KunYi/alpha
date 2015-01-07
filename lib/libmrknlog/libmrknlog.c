@@ -42,7 +42,6 @@ static int close_mrknlog(struct mrknlog_device_t* dev) {
   if (dev) {
     android_logger_list_free(dev->logger_list);                    /* <4> */
     free(dev);                                                     /* <5> */
-    dev = 0;
   }
   return 0;
 }
