@@ -46,6 +46,9 @@ BOARD_SEPOLICY_DIRS += \
         build/target/board/generic/sepolicy \
         build/target/board/generic_x86/sepolicy
 
+# Include SELinux policy additions for our services
+BOARD_SEPOLICY_DIRS += device/newcircle/alpha/sepolicy
+
 BOARD_SEPOLICY_UNION += \
         device.te \
         domain.te \
@@ -58,3 +61,6 @@ BOARD_SEPOLICY_UNION += \
         shell.te \
         system_server.te \
         zygote.te
+
+# Our additions include a new system service context
+BOARD_SEPOLICY_UNION += service_contexts
