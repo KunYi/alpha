@@ -21,8 +21,6 @@ DEVICE_PACKAGE_OVERLAYS := $(MY_PATH)/overlay
 # Copy our init, ueventd, and fstab configuration files to the root
 # file system (ramdisk.img -> boot.img)
 PRODUCT_COPY_FILES += $(MY_PATH)/init.goldfish.rc:root/init.goldfish.rc
-PRODUCT_COPY_FILES += $(MY_PATH)/ueventd.goldfish.rc:root/ueventd.goldfish.rc
-PRODUCT_COPY_FILES += $(MY_PATH)/fstab.goldfish:root/fstab.goldfish
 
 # Include all packages from this file
 include $(MY_PATH)/packages.mk
