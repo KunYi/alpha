@@ -3,6 +3,8 @@
 # Product-specific compile-time definitions.
 #
 
+MY_PATH := device/newcircle/alpha
+
 # The generic product target doesn't have any hardware-specific pieces.
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := false
@@ -48,7 +50,7 @@ BOARD_SEPOLICY_DIRS += \
         build/target/board/generic_x86/sepolicy
 
 # Include SELinux policy additions for our services
-BOARD_SEPOLICY_DIRS += device/newcircle/alpha/sepolicy
+BOARD_SEPOLICY_DIRS += $(MY_PATH)/sepolicy
 
 BOARD_SEPOLICY_UNION += \
         device.te \
