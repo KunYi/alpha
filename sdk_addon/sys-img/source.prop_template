@@ -1,0 +1,8 @@
+Addon.VendorDisplay=NewCircle
+Addon.VendorId=newcircle
+AndroidVersion.ApiLevel=${PLATFORM_SDK_VERSION}
+Pkg.Desc=NewCircle Alpha Platform 5.0.1
+Pkg.Revision=1
+SystemImage.Abi=${TARGET_CPU_ABI}
+SystemImage.TagDisplay=Alpha Add-On
+SystemImage.TagId=alpha

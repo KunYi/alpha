@@ -1,0 +1,43 @@
+<sdk:sdk-addon xmlns:sdk="http://schemas.android.com/sdk/android/addon/7"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sdk:license type="text" id="alpha-addon-license">
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this SDK addon except in compliance with the License.
+    You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    </sdk:license>
+    <sdk:add-on>
+        <sdk:vendor-id>newcircle</sdk:vendor-id>
+        <sdk:vendor-display>NewCircle</sdk:vendor-display>
+        <sdk:name-id>alpha</sdk:name-id>
+        <sdk:name-display>Alpha Add-On</sdk:name-display>
+        <sdk:api-level>21</sdk:api-level>
+        <sdk:revision>1</sdk:revision>
+        <sdk:description>NewCircle Alpha Add-On</sdk:description>
+        <sdk:desc-url>http://thenewcircle.com/</sdk:desc-url>
+        <sdk:uses-license ref="alpha-addon-license"/>
+        <sdk:archives>
+            <sdk:archive>
+                <sdk:size>104797</sdk:size>
+                <sdk:checksum type="sha1">7418c038e40bdd82ebc8533183ab9404ad6860ec</sdk:checksum>
+                <sdk:url>alpha_sdk_addon_r1.zip</sdk:url>
+            </sdk:archive>
+        </sdk:archives>
+        <!-- Note the extra libraries present in the add-on -->
+        <sdk:libs>
+            <sdk:lib>
+                <sdk:name>com.marakana.android.lib.log</sdk:name>
+                <sdk:description>LibLog</sdk:description>
+            </sdk:lib>
+            <sdk:lib>
+                <sdk:name>com.marakana.android.service.log</sdk:name>
+                <sdk:description>LogService</sdk:description>
+            </sdk:lib>
+        </sdk:libs>
+    </sdk:add-on>
+</sdk:sdk-addon>
