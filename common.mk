@@ -6,7 +6,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 # Enable overlays
-DEVICE_PACKAGE_OVERLAYS := $(MY_PATH)/overlay
+DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
 # Enable our custom kernel
 LOCAL_KERNEL := $(LOCAL_PATH)/kernel
