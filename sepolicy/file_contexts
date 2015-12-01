@@ -1,0 +1,2 @@
+# Domain transition for newcircle log daemon
+/system/bin/mrknlogd u:object_r:mrknlogd_exec:s0

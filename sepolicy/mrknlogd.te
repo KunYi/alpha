@@ -1,0 +1,9 @@
+# newcircle log daemon
+type mrknlogd, domain, mlstrustedsubject;
+type mrknlogd_exec, exec_type, file_type;
+
+init_daemon_domain(mrknlogd)
+
+# let the daemon access logd
+allow mrknlogd logd_socket:sock_file write;
+allow mrknlogd logd:unix_stream_socket connectto;
