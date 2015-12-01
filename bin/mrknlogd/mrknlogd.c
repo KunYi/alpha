@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 #include <signal.h>
 #include <unistd.h>
 #include <mrknlog.h>
@@ -35,7 +37,7 @@ int main (int argc, char* argv[]) {
           totalSize = dev->get_total_log_size(dev);
           usedSize = dev->get_used_log_size(dev);
           if (dev->flush_log(dev) == 0) {
-            SLOGI("Flushed log (%d, %d of %d bytes). Waiting %d seconds before the next flush.", 
+            SLOGI("Flushed log (%d, %d of %d bytes). Waiting %d seconds before the next flush.",
               count, usedSize, totalSize, frequency);
           } else if (errno == ECONNREFUSED) {
             SLOGW("Too early to flush log. Socket not ready yet.");
@@ -54,7 +56,7 @@ int main (int argc, char* argv[]) {
       }
     } else {
       fprintf(stderr, "Failed to get module: %s", MRKNLOG_HARDWARE_MODULE_ID);
-      ret = -3;    
+      ret = -3;
     }
   }
   return ret;
