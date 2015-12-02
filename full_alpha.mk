@@ -19,7 +19,7 @@
 include $(LOCAL_PATH)/common.mk
 
 # Inherit all packages from the "full" Android product
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_x86.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 
 # Override inherited values
 PRODUCT_NAME := full_alpha
