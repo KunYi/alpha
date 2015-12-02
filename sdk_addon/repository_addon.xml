@@ -16,7 +16,7 @@
         <sdk:vendor-display>NewCircle</sdk:vendor-display>
         <sdk:name-id>alpha</sdk:name-id>
         <sdk:name-display>Alpha Add-On</sdk:name-display>
-        <sdk:api-level>21</sdk:api-level>
+        <sdk:api-level>23</sdk:api-level>
         <sdk:revision>1</sdk:revision>
         <sdk:description>NewCircle Alpha Add-On</sdk:description>
         <sdk:desc-url>http://thenewcircle.com/</sdk:desc-url>
