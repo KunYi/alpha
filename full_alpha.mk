@@ -29,6 +29,9 @@ PRODUCT_MODEL := Full Alpha Image for Emulator
 # Enable overlays
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
+# Include SELinux policy additions for our services
+BOARD_SEPOLICY_DIRS += device/newcircle/alpha/sepolicy
+
 # Add our device-specific packages
 PRODUCT_PACKAGES += MrknLogNative
 PRODUCT_PACKAGES += MrknLogClient
