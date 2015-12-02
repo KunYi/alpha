@@ -13,8 +13,8 @@
     </sdk:license>
     <sdk:system-image>
         <sdk:revision>1</sdk:revision>
-        <sdk:description>NewCircle SDK Platform 5.0.1</sdk:description>
-        <sdk:api-level>21</sdk:api-level>
+        <sdk:description>NewCircle SDK Platform 6.0</sdk:description>
+        <sdk:api-level>23</sdk:api-level>
         <sdk:abi>x86</sdk:abi>
         <sdk:archives>
             <sdk:archive>
