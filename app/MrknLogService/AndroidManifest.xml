@@ -4,7 +4,7 @@
   android:sharedUserId="android.uid.system">                            <!-- <1> -->
 
   <permission android:name="com.marakana.android.logservice.FLUSH_LOG"
-    android:protectionLevel="normal"
+    android:protectionLevel="dangerous"
     android:label="@string/flush_log_permission_label"
     android:description="@string/flush_log_permission_description"/>    <!-- <2> -->
 
