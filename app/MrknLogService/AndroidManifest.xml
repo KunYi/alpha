@@ -5,12 +5,11 @@
 
   <permission android:name="com.marakana.android.logservice.FLUSH_LOG"
     android:protectionLevel="dangerous"
-    android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
     android:label="@string/flush_log_permission_label"
     android:description="@string/flush_log_permission_description"/>    <!-- <2> -->
 
   <uses-permission android:name="android.permission.READ_LOGS"/>        <!-- <3> -->
-  
+
   <application android:name=".LogServiceApp" android:persistent="true"> <!-- <4> -->
     <uses-library android:name="com.marakana.android.service.log" />    <!-- <5> -->
     <uses-library android:name="com.marakana.android.lib.log" />        <!-- <6> -->
