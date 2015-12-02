@@ -6,6 +6,8 @@
 #include <fcntl.h>
 #include <time.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 
 static struct logger* get_logger_device(struct logger_list *logger_list) {
@@ -15,7 +17,7 @@ static struct logger* get_logger_device(struct logger_list *logger_list) {
 
 static int flush_log(struct mrknlog_device_t* dev) {
   SLOGV("Flushing %s", android_log_id_to_name(LOG_ID));            /* <1> */
-  
+
   struct logger *logger = get_logger_device(dev->logger_list);
   return android_logger_clear(logger);                             /* <4> */
 }
@@ -23,7 +25,7 @@ static int flush_log(struct mrknlog_device_t* dev) {
 static int get_total_log_size(struct mrknlog_device_t* dev) {
   SLOGV("Getting total buffer size of %s",                         /* <1> */
       android_log_id_to_name(LOG_ID));
-  
+
   struct logger *logger = get_logger_device(dev->logger_list);
   return android_logger_get_log_size(logger);                      /* <4> */
 }
@@ -31,7 +33,7 @@ static int get_total_log_size(struct mrknlog_device_t* dev) {
 static int get_used_log_size(struct mrknlog_device_t* dev) {
   SLOGV("Getting used buffer size of %s",                          /* <1> */
       android_log_id_to_name(LOG_ID));
-  
+
   struct logger *logger = get_logger_device(dev->logger_list);
   return android_logger_get_log_readable_size(logger);             /* <4> */
 }
